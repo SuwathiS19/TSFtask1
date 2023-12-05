@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Banking App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eeeff0;
+            background-image: url('bn.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+    
+
+        .container {
+            background-color: #fff;
+            max-width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            margin-top: 10px;
+        }
+
+        .customer-list, .customer-details, .transfer-money {
+            display: none;
+        }
+
+        .button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label, select, input {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="home-screen">
+        <h1>Welcome to Simple TSF Bank App</h1>
+        <button class="button" onclick="viewAllCustomers()">View All Customers</button>
+    
+
+    </div>
+
+    <div class="container customer-list" id="customer-list">
+        <h2>Customer List:</h2>
+        <ul id="customer-list-items">
+            <li class="button" onclick="viewCustomerDetails(1)">Customer 1 - Suwathi</li>
+<li class="button" onclick="viewCustomerDetails(2)">Customer 2 - Meha </li>
+<li class="button" onclick="viewCustomerDetails(3)">Customer 3 - Rajesh </li>
+<li class="button" onclick="viewCustomerDetails(4)">Customer 4 - Priya </li>
+<li class="button" onclick="viewCustomerDetails(5)">Customer 5 - Amit </li>
+<li class="button" onclick="viewCustomerDetails(6)">Customer 6 - Sneha </li>
+<li class="button" onclick="viewCustomerDetails(7)">Customer 7 - Neha </li>
+<li class="button" onclick="viewCustomerDetails(8)">Customer 8 - Vikram </li>
+<li class="button" onclick="viewCustomerDetails(9)">Customer 9 - Anjana </li>
+<li class="button" onclick="viewCustomerDetails(10)">Customer 10 - Rahul </li>
+
+        </ul>
+        <div class="button-container">
+            <button class="button" onclick="backToHome()">Back to Home</button>
+        </div>
+    </div>
+
+    <div class="container customer-details" id="customer-details">
+        <h2>Customer Details</h2>
+        <p>Name: <span id="customer-name">Customer Name</span></p>
+        <p>Email: <span id="customer-email">customer@example.com</span></p>
+        <p>Balance: $<span id="customer-balance">1000</span></p>
+        <div class="button-container">
+            <button class="button" onclick="transferMoney()">Transfer Money</button>
+            <button class="button" onclick="backToCustomerList()">Back to Customer List</button>
+        </div>
+    </div>
+
+    <div class="container transfer-money" id="transfer-money">
+        <h2>Transfer Money</h2>
+        <label for="recipient">Select recipient:</label>
+        <select id="recipient">
+    <option value="1">Customer 1 - Suwathi</option>
+    <option value="2">Customer 2 - Meha </option>
+    <option value="3">Customer 3 - Rajesh </option>
+    <option value="4">Customer 4 - Priya </option>
+    <option value="5">Customer 5 - Amit </option>
+    <option value="6">Customer 6 - Sneha </option>
+    <option value="7">Customer 7 - Neha </option>
+    <option value="8">Customer 8 - Vikram </option>
+    <option value="9">Customer 9 - Anjana </option>
+    <option value="10">Customer 10 - Rahul </option>
+
+        </select>
+        <label for "amount">Amount:</label>
+        <input type="number" id="amount" placeholder="Enter amount">
+        <div class="button-container">
+            <button class="button" onclick="completeTransfer()">Complete Transfer</button>
+            <button class="button" onclick="backToCustomerDetails()">Back to Customer Details</button>
+        </div>
+    </div>
+
+   <script>
+    const customers = [
+        { id: 1, name: "Suwathi", email: "Suwa@gmail.com", balance: 1000 },
+        { id: 2, name: "Meha ", email: "meha@gmail.com", balance: 1500 },
+        { id: 3, name: "Rajesh ", email: "rajesh@gmail.com", balance: 2000 },
+        { id: 4, name: "Priya ", email: "priya@gmail.com", balance: 3000 },
+        { id: 5, name: "Amit ", email: "amit@gmail.com", balance: 500 },
+        { id: 6, name: "Sneha ", email: "sneha@gmail.com", balance: 1200 },
+        { id: 7, name: "Neha ", email: "neha@gmail.com", balance: 800 },
+        { id: 8, name: "Vikram ", email: "vikram@gmail.com", balance: 2500 },
+        { id: 9, name: "Anjana ", email: "anjana@gmail.com", balance: 1700 },
+        { id: 10, name: "Rahul ", email: "rahul@gmail.com", balance: 3500 }
+        // Add more customers here
+    ];
+
+
+
+
+        // Show customer list initially
+        document.getElementById('customer-list').style.display = 'block';
+
+        function viewAllCustomers() {
+            document.getElementById('home-screen').style.display = 'none';
+            document.getElementById('customer-list').style.display = 'block';
+        }
+
+        function backToHome() {
+            document.getElementById('customer-list').style.display = 'none';
+            document.getElementById('home-screen').style.display = 'block';
+        }
+
+        function viewCustomerDetails(customerId) {
+            const customer = customers.find(cust => cust.id === customerId);
+            document.getElementById('customer-list').style.display = 'none';
+            document.getElementById('customer-details').style.display = 'block';
+            document.getElementById('customer-name').textContent = customer.name;
+            document.getElementById('customer-email').textContent = customer.email;
+            document.getElementById('customer-balance').textContent = customer.balance;
+        }
+
+        function backToCustomerList() {
+            document.getElementById('customer-details').style.display = 'none';
+            document.getElementById('customer-list').style.display = 'block';
+        }
+
+        function transferMoney() {
+            document.getElementById('customer-details').style.display = 'none';
+            document.getElementById('transfer-money').style.display = 'block';
+        }
+
+        function backToCustomerDetails() {
+            document.getElementById('transfer-money').style.display = 'none';
+            document.getElementById('customer-details').style.display = 'block';
+        }
+
+        function completeTransfer() {
+            const senderId = 1; // Hardcoded for demonstration
+            const recipientId = parseInt(document.getElementById('recipient').value);
+            const amount = parseFloat(document.getElementById('amount').value);
+
+            const sender = customers.find(cust => cust.id === senderId);
+            const recipient = customers.find(cust => cust.id === recipientId);
+
+            if (sender.balance >= amount) {
+                sender.balance -= amount;
+                recipient.balance += amount;
+                document.getElementById('customer-balance').textContent = sender.balance;
+                alert(`Transfer of $${amount} to ${recipient.name} completed.`);
+            } else {
+                alert("Insufficient balance for the transfer.");
+            }
+
+            backToCustomerDetails();
+        }
+    </script>
+</body>
+<footer>
+    © Copyright 2023 TSF Bank
+</footer>
+</html>
